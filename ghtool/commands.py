@@ -6,30 +6,9 @@ finding last repository on GitHub.
 '''
 import requests
 import grequests
-import time
 
 BASE_GITHUB_API_ENDPOINT = 'https://api.github.com/'
 DEFAULT_NUM_OF_REPOS = 10
-
-
-def find_last_repo(l, r):
-    '''
-    This method is simple implementation of bin search with purpose
-    to find last repository.
-    It takes two parameters: left and right boundary (integers).
-    Method returns id of last repository.
-    '''
-    # TODO: add some restrictions, for example: must l < r (otherwise raise exception), also cover http errors
-    since = (l + r) // 2
-    res = requests.get(BASE_GITHUB_API_ENDPOINT + 'repositories', params={'since': since})
-    repos = res.json()
-    cnt = len(repos)
-    if cnt == 0:
-        return find_last_repo(l, since)
-    elif cnt == 100:
-        return find_last_repo(since, r)
-    else:
-        return repos[cnt-1]['id']
 
 def q_builder(args):
     '''
@@ -157,18 +136,3 @@ class SearchCommand(Command):
         parser.add_argument('-sort', help='sort by field (DEFAULT: \'stars\')', default='stars',
                             choices=['stars', 'forks', 'updated'])
         parser.add_argument('-order', help='sort order (DEFAULT: \'desc\')', default='desc', choices=['desc', 'asc'])
-
-class LastRepoCommand(Command):
-    def execute(self):
-        start = time.time()
-        print('Last repo id: {}'.format(find_last_repo(72000000, 100000000)))
-        end = time.time()
-        print('Elapsed time: {}'.format(end - start))
-
-    @staticmethod
-    def name():
-        return 'last_repo'
-
-    @staticmethod
-    def add_cmd_subparser(subparsers):
-        subparsers.add_parser('last_repo', help='find last repository')
