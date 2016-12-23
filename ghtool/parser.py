@@ -11,7 +11,7 @@ command_subclasses = vars()[Command.__name__].__subclasses__()
 
 MAP_CMD_TO_CLASS = {cmd.name(): cmd for cmd in command_subclasses}
 
-def init_parser():
+def create_parser():
     '''
     This method returns parser for input arguments.
     '''

@@ -1,7 +1,7 @@
 '''
 This module contains method for console entry point
 '''
-from ghtool import init_parser, MAP_CMD_TO_CLASS
+from ghtool import create_parser, MAP_CMD_TO_CLASS
 import sys
 
 def main():
@@ -10,7 +10,7 @@ def main():
     result (text) of specific command execution or
     displays help.
     '''
-    parser = init_parser()
+    parser = create_parser()
     cnt_argvs = len(sys.argv)
     if cnt_argvs == 1:
         parser.print_help()

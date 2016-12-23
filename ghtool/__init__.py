@@ -1,1 +1,1 @@
-from .parser import init_parser, MAP_CMD_TO_CLASS
+from .parser import create_parser, MAP_CMD_TO_CLASS
